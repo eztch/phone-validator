@@ -16,12 +16,11 @@ public class PhoneController {
     public Map<String, Object> validatePhone(@RequestBody Map<String, String> input) {
         Map<String, Object> response = new HashMap<>();
         String number = input.get("phoneNumber");
-        String region = input.get("region");
 
         PhoneNumberUtil util = PhoneNumberUtil.getInstance();
 
         try {
-            PhoneNumber phoneNumber = util.parse(number, region.toUpperCase());
+            PhoneNumber phoneNumber = util.parse(number, null); // No region needed
             response.put("valid", util.isValidNumber(phoneNumber));
             response.put("e164", util.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.E164));
             response.put("national", util.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
